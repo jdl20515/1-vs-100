@@ -82,9 +82,21 @@ class AnimatedSprite(SpriteObject):
 
     def get_images(self, path):
         images = deque()
-        for file_name in os.listdir(path):
-            if os.path.isfile(file_name) and os.path.getsize(file_name) > 0:
-                img = pg.image.load(path + '/' + file_name).convert_alpha()
-                images.append(img)
-                
+        try:
+            for file_name in os.listdir(path):
+                full_path = os.path.join(path, file_name)
+                # Check if it's a file and not empty
+                if os.path.isfile(full_path) and os.path.getsize(full_path) > 0:
+                    try:
+                        img = pg.image.load(full_path).convert_alpha()
+                        images.append(img)
+                    except pg.error as e:
+                        print(f"Error loading image '{full_path}': {e}")
+                # else:
+                    # print(f"Skipped invalid or empty file: {file_name}")
+        except FileNotFoundError as e:
+            print(f"Directory not found: {path}. Error: {e}")
+        except Exception as e:
+            print(f"Unexpected error while loading images: {e}")
         return images
+
