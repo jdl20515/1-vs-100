@@ -23,7 +23,37 @@ class Game:
         self.global_trigger = False
         self.global_event = pg.USEREVENT + 0
         pg.time.set_timer(self.global_event, 40)
+        self.show_title_screen()
+
         self.new_game()
+
+    def show_title_screen(self):
+        font = pg.font.Font(None, 74)  # Adjust font size or load a custom font
+        title_text = "The Grinch has stolen Christmas."
+        subtitle_text = "Steal it back."
+        text_color = (255, 255, 255)  # White color
+        bg_color = (0, 0, 0)  # Black background
+
+        self.screen.fill(bg_color)
+        title_surface = font.render(title_text, True, text_color)
+        subtitle_surface = font.render(subtitle_text, True, (255, 0, 0))
+
+        title_rect = title_surface.get_rect(center=(RES[0] // 2, RES[1] // 2 - 50))
+        subtitle_rect = subtitle_surface.get_rect(center=(RES[0] // 2, RES[1] // 2 + 50))
+
+        self.screen.blit(title_surface, title_rect)
+        self.screen.blit(subtitle_surface, subtitle_rect)
+        pg.display.flip()
+
+        waiting = True
+        while waiting:
+            for event in pg.event.get():
+                if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+                    pg.quit()
+                    sys.exit()
+                elif event.type == pg.KEYDOWN:
+                    waiting = False  # Proceed to the game when any key is pressed
+
 
     def new_game(self):
         self.map = Map(self)
@@ -43,12 +73,13 @@ class Game:
         self.weapon.update()
         pg.display.flip()
         self.delta_time = self.clock.tick(FPS)
-        pg.display.set_caption(f'{self.clock.get_fps() :.1f}')
+        pg.display.set_caption(f'DESTORY THE GRINCH')
 
     def draw(self):
         # self.screen.fill('black')
         self.object_renderer.draw()
         self.weapon.draw()
+
         # self.map.draw()
         # self.player.draw()
 

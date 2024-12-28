@@ -58,10 +58,7 @@ class NPC(AnimatedSprite):
 
     def animate_death(self):
         if not self.alive:
-            if self.game.global_trigger and self.frame_counter < len(self.death_images) - 1:
-                self.death_images.rotate(-1)
-                self.image = self.death_images[0]
-                self.frame_counter += 1
+            self.image = self.death_images[0]
 
     def animate_pain(self):
         self.animate(self.pain_images)
@@ -194,7 +191,7 @@ class CacoDemonNPC(NPC):
                  scale=0.7, shift=0.27, animation_time=250):
         super().__init__(game, path, pos, scale, shift, animation_time)
         self.attack_dist = 1.0
-        self.health = 150
+        self.health = 100
         self.attack_damage = 25
         self.speed = 0.05
         self.accuracy = 0.35
@@ -204,7 +201,7 @@ class CyberDemonNPC(NPC):
                  scale=1.0, shift=0.04, animation_time=210):
         super().__init__(game, path, pos, scale, shift, animation_time)
         self.attack_dist = 6
-        self.health = 350
+        self.health = 450
         self.attack_damage = 15
         self.speed = 0.055
         self.accuracy = 0.25
