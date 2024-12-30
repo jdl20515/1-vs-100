@@ -1,5 +1,3 @@
-# DOOM style 3d (raycasting) game in Python (based on Wolfenstein 3d)
-
+# 1 MIT Student vs 100 Coders Submission!
 Control: 'WASD' + mouse
 
-![doom](/sreenshots/0.jpg)
